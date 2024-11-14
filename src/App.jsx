@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
-function App() {
+const FollowMouse = () => {
+
   const [enabled, setEnabled] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0})
 
@@ -10,7 +11,7 @@ function App() {
 
     const handleMove = (event) => {
       const { clientX, clientY } = event
-      console.log('handleMove', { clientX, clientY })
+      //console.log('handleMove', { clientX, clientY })
       setPosition({x: clientX, y: clientY})
     }
 
@@ -27,7 +28,7 @@ function App() {
   }, [enabled])
 
   return (
-    <main>
+    <>
       <div style={{
         position: 'absolute',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -42,6 +43,19 @@ function App() {
         transform: `translate(${position.x}px, ${position.y}px)`
       }}></div>
       <button onClick={() => setEnabled(!enabled)}>{enabled? 'Desactivar' : 'Activar'} seguir puntero</button>
+    </>
+  )
+}
+
+function App() {
+  const [mounted, setMounted] = useState(true)
+
+  return (
+    <main>
+      {mounted && <FollowMouse />}
+      <button onClick={() => setMounted(!mounted)}>
+        Toggle mounted FollowMouse
+        </button>
     </main>
   )
 }
